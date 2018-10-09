@@ -30,6 +30,7 @@ const mazeWidth = 556;
 const mazeHeight = 556;
 
 var intervalVar;
+var timeLeft;
 
 function clearRectangle(px, py, w, h) {
     CONTEXT.beginPath();
@@ -119,6 +120,11 @@ function moveRect(e) {
         CONTEXT.textAlign = "center";
         CONTEXT.textBaseline = "middle";
         CONTEXT.fillText("Congratulations!", CANVAS.width / 2, CANVAS.height / 2);
+
+        document.getElementById("solve_time_seconds").value = secondsToSolve - timeLeft;
+        document.getElementById("solved").value = "True";
+        document.getElementById("next-button").classList.remove("d-none");
+
         window.removeEventListener("keydown", moveRect, true);
     }
 }
@@ -162,11 +168,13 @@ function createTimer(seconds) {
             CONTEXT.font = "40px Arial";
             CONTEXT.fillStyle = "red";
             CONTEXT.textAlign = "center";
-            CONTEXT.textBaseline = "middle";
-            CONTEXT.fillText("Time's up!", CANVAS.width / 2, CANVAS.height / 2);
+            CONTEXT.textBaseline = "middle"; CONTEXT.fillText("Time's up!", CANVAS.width / 2, CANVAS.height / 2);
+            document.getElementById("next-button").classList.remove("d-none");
+            document.getElementById("solve_time_seconds").value = 0;
+            document.getElementById("solved").value = "False";
             return;
         }
-        CONTEXT.font = "20px Arial";
+        CONTEXT.font = "30px Arial";
         if (seconds <= 10 && seconds > 5) {
             CONTEXT.fillStyle = "orangered";
         }
@@ -185,9 +193,11 @@ function createTimer(seconds) {
         }
         CONTEXT.fillText(minutes.toString() + ":" + secondsToShow, mazeWidth + 30, CANVAS.height / 2);
         seconds--;
+        timeLeft = seconds;
     }, 1000);
 }
 
 drawMazeAndRectangle();
 window.addEventListener("keydown", moveRect, true);
-createTimer(120); // 2 minutes
+timeLeft = secondsToSolve;
+createTimer(timeLeft); // 2 minutes

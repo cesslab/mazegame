@@ -2,30 +2,31 @@
 {% load otree static %}
 
 {% block title %}
-    Maze Game
+    Maze 1
 {% endblock title %}
 
 {% block styles %}
-    <link href="{% static "maze_timing/style.css" %}" rel="stylesheet">
+   {# <link href="{% static "maze_timing/style.css" %}" rel="stylesheet"> #}
 {% endblock styles %}
 
 {% block content %}
-
-    <h2>Complete the maze in the time given.</h2>
     <canvas width="616" height="556" id="mazecanvas">Can't load the maze game, because your browser doesn't support HTML5.</canvas>
     <noscript>JavaScript is not enabled. To play the game, you should enable it.</noscript>
 
-    <button id="next-button" class="otree-btn-next btn btn-primary d-none">Next</button>
+    <div>
+        <button id="next-button" class="otree-btn-next btn btn-primary d-none">Next</button>
+    </div>
 
     <div>
-        <input type="hidden" name="time" id='time' value="0">
+        <input type="hidden" name="solve_time_seconds" id='solve_time_seconds'>
+        <input type="hidden" name="solved" id='solved'>
     </div>
 {% endblock content %}
 
 {% block scripts %}
     <script>
-    const MAZE_IMG_PATH = "{% static 'maze_timing/20_20_maze.png' %}";
-
+        const MAZE_IMG_PATH = "{% static 'maze_timing/20_20_maze.png' %}";
+        var secondsToSolve = {{ seconds_to_solve }};
     </script>
     <script src={% static 'maze_timing/maze.js' %}></script>
 {% endblock scripts %}
