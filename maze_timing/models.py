@@ -8,7 +8,6 @@ class Constants(BaseConstants):
     players_per_group = None
     num_rounds = 1
 
-
 class Subsession(BaseSubsession):
     pass
 
@@ -18,4 +17,5 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    pass
+    solved = models.BooleanField(default=False)
+    solve_time_seconds = models.IntegerField()
