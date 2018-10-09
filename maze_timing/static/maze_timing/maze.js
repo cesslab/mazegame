@@ -77,7 +77,7 @@ function drawMazeAndRectangle() {
         drawCursor(START_X, START_Y, BLUE);
         drawEndPoint(END_X, END_Y, GREEN);
     };
-    mazeImg.src = "20_20_maze.png";
+    mazeImg.src = MAZE_IMG_PATH;
 }
 
 function moveRect(e) {
