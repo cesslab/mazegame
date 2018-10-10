@@ -1,0 +1,21 @@
+{% extends "global/Page.html" %}
+{% load otree static %}
+
+{% block title %}
+    Instructions
+{% endblock title %}
+
+{% block styles %}
+   {# <link href="{% static "maze_timing/style.css" %}" rel="stylesheet"> #}
+{% endblock styles %}
+
+{% block content %}
+    <p>You will be presented with {{ num_mazes }} mazes, each of which you will be given at most
+        {{ minutes_to_solve }} minutes to complete.</p>
+    <div>
+        <button id="next-button" class="otree-btn-next btn btn-primary">Next</button>
+    </div>
+{% endblock content %}
+
+{% block scripts %}
+{% endblock scripts %}
