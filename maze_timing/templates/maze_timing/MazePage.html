@@ -2,7 +2,7 @@
 {% load otree static %}
 
 {% block title %}
-    Maze 1
+    Maze {{ round }}
 {% endblock title %}
 
 {% block styles %}
@@ -20,13 +20,22 @@
     <div>
         <input type="hidden" name="solve_time_seconds" id='solve_time_seconds'>
         <input type="hidden" name="solved" id='solved'>
+        <input type="hidden" name="maze_id" id='maze_id' value="{{ maze_id }}">
     </div>
 {% endblock content %}
 
 {% block scripts %}
+    <script src={% static 'maze_timing/js/js.cookie.js' %}></script>
     <script>
-        const MAZE_IMG_PATH = "{% static 'maze_timing/20_20_maze.png' %}";
+        const MAZE_IMG_PATH = "{% static maze_img %}";
         var secondsToSolve = {{ seconds_to_solve }};
+        var START_X = {{ start_x }};
+        var START_Y = {{ start_y }};
+        var END_X = {{ end_x }};
+        var END_Y = {{ end_y }};
+
+        var x = {{ start_x }};
+        var y = {{ start_y }};
     </script>
-    <script src={% static 'maze_timing/maze.js' %}></script>
+    <script src={% static 'maze_timing/js/maze.js' %}></script>
 {% endblock scripts %}
