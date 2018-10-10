@@ -17,15 +17,6 @@ const MOVE = 3;
 
 const CURSOR_WIDTH = 12;
 
-const START_X = 147;
-const START_Y = 2;
-
-const END_X = 169;
-const END_Y = 321;
-
-var x = 147;
-var y = 2;
-
 const mazeWidth = 556;
 const mazeHeight = 556;
 
