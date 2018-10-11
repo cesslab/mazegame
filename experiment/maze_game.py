@@ -1,4 +1,5 @@
 import random
+from typing import List
 
 
 class Maze:
@@ -13,28 +14,32 @@ class Maze:
 class MazeGame:
     def __init__(self):
         self.mazes = [
-            Maze('easy1-100-1', 147, 2, 169, 314),
-            Maze('easy2-100-1', 147, 2, 169, 314),
-            Maze('easy3-100-1', 147, 2, 169, 314),
-            Maze('easyM1-100-20', 147, 2, 169, 314),
-            Maze('easyM2-100-20', 147, 2, 169, 314),
-            Maze('easyM3-100-20', 147, 2, 169, 314),
-            Maze('hard1-60-40', 147, 2, 169, 314),
-            Maze('hard2-60-40', 147, 2, 169, 314),
-            Maze('hard3-60-40', 147, 2, 169, 314),
-            Maze('hardV1-40-60', 147, 2, 169, 314),
-            Maze('hardV2-40-60', 147, 2, 169, 314),
-            Maze('hardV3-40-60', 147, 2, 169, 314),
-            Maze('medium1-100-40', 147, 2, 169, 314),
-            Maze('medium2-100-40', 147, 2, 169, 314),
-            Maze('medium3-100-40', 147, 2, 169, 314)]
+            Maze('easy1', 147, 2, 169, 314),
+            Maze('easy2', 147, 2, 169, 314),
+            Maze('easy3', 147, 2, 169, 314),
+            Maze('easyM1', 147, 2, 169, 314),
+            Maze('easyM2', 147, 2, 169, 314),
+            Maze('easyM3', 147, 2, 169, 314),
+            Maze('hard1', 147, 2, 169, 314),
+            Maze('hard2', 147, 2, 169, 314),
+            Maze('hard3', 147, 2, 169, 314),
+            Maze('hardV1', 147, 2, 169, 314),
+            Maze('hardV2', 147, 2, 169, 314),
+            Maze('hardV3', 147, 2, 169, 314),
+            Maze('medium1', 147, 2, 169, 314),
+            Maze('medium2', 147, 2, 169, 314),
+            Maze('medium3', 147, 2, 169, 314)]
         random.shuffle(self.mazes)
 
         self.rounds = len(self.mazes)
 
     def maze(self, round_number: int) -> Maze:
-        return self.mazes[round_number]
+        return self.mazes[round_number - 1]
 
     def num_mazes(self) -> int:
         return len(self.mazes)
+
+    def maze_ids(self) -> List[str]:
+        return [maze.name for maze in self.mazes]
+
 
