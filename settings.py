@@ -12,7 +12,7 @@ SESSION_CONFIGS = [
        'display_name': "Maze Timing",
        'num_demo_participants': 1,
        'app_sequence': ['maze_timing'],
-        'seconds_to_solve_maze': 120,
+        'seconds_to_solve_maze': 250,
     },
 ]
 
