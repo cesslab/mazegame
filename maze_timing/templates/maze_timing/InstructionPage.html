@@ -18,4 +18,15 @@
 {% endblock content %}
 
 {% block scripts %}
+    <script src={% static 'maze_timing/js/js.cookie.js' %}></script>
+    <script>
+    let maze_ids = {{ maze_ids|safe }};
+    for (let maze of maze_ids) {
+        Cookies.remove(maze);
+    }
+    Cookies.remove('x');
+    Cookies.remove('y');
+    Cookies.remove('secondsToSolve');
+    Cookies.remove('solved');
+    </script>
 {% endblock scripts %}
