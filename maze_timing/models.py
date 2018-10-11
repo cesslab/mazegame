@@ -2,19 +2,21 @@ from otree.api import (
     models, widgets, BaseConstants, BaseSubsession, BaseGroup, BasePlayer,
 )
 
-from experiment.maze_game import MazeGame
+from experiment.maze_game import MazeCollection, Participant
 
 
 class Constants(BaseConstants):
     name_in_url = 'maze_timing'
     players_per_group = None
-    maze_game = MazeGame()
-    num_rounds = maze_game.rounds
+    num_rounds = 15
     INSTRUCTIONS_ROUND = 1
 
 
 class Subsession(BaseSubsession):
-    pass
+    def creating_session(self):
+        if self.round_number == 1:
+            for player in self.get_players():
+                Participant.set_maze_collection(player, MazeCollection())
 
 
 class Group(BaseGroup):

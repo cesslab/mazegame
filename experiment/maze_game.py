@@ -11,7 +11,7 @@ class Maze:
         self.end_y = end_y
 
 
-class MazeGame:
+class MazeCollection:
     def __init__(self):
         self.mazes = [
             Maze('easy1', 147, 2, 169, 314),
@@ -43,3 +43,11 @@ class MazeGame:
         return [maze.name for maze in self.mazes]
 
 
+class Participant:
+    @staticmethod
+    def get_maze_collection(player) -> MazeCollection:
+        return player.participant.vars['maze_collection']
+
+    @staticmethod
+    def set_maze_collection(player, maze_collection: MazeCollection):
+        player.participant.vars['maze_collection'] = maze_collection

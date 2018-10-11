@@ -1,6 +1,8 @@
 from ._builtin import Page
 from .models import Constants
 
+from experiment.maze_game import Participant
+
 
 class InstructionPage(Page):
     def is_displayed(self):
@@ -10,7 +12,7 @@ class InstructionPage(Page):
             return False
 
     def vars_for_template(self):
-        maze_game = Constants.maze_game
+        maze_game = Participant.get_maze_collection(self.player)
         maze_ids = maze_game.maze_ids()
         return {
             'maze_ids': maze_ids,
