@@ -26,7 +26,8 @@ class MazePage(Page):
     form_fields = ['solved', 'solve_time_seconds', 'maze_id']
 
     def vars_for_template(self):
-        maze = Constants.maze_game.maze(self.round_number)
+        maze_game = Participant.get_maze_collection(self.player)
+        maze = maze_game.maze(self.round_number)
         return {
             'seconds_to_solve': self.session.config['seconds_to_solve_maze'],
             'maze_img': 'maze_timing/img/'+maze.name+'.png',
