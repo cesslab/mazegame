@@ -3,9 +3,17 @@ from .models import Constants
 
 
 class InstructionPage(Page):
+    def is_displayed(self):
+        if self.round_number == Constants.INSTRUCTIONS_ROUND:
+            return True
+        else:
+            return False
+
     def vars_for_template(self):
         maze_game = Constants.maze_game
+        maze_ids = maze_game.maze_ids()
         return {
+            'maze_ids': maze_ids,
             'num_mazes': maze_game.num_mazes(),
             'minutes_to_solve': self.session.config['seconds_to_solve_maze']/60,
         }
@@ -29,6 +37,4 @@ class MazePage(Page):
         }
 
 
-maze_page_sequence = [MazePage]*Constants.num_rounds
-
-page_sequence = [InstructionPage] + maze_page_sequence
+page_sequence = [InstructionPage, MazePage]
