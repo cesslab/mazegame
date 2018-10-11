@@ -72,6 +72,37 @@ function drawMazeAndRectangle() {
     mazeImg.src = MAZE_IMG_PATH;
 }
 
+function disableCursor() {
+    window.removeEventListener("keydown", moveRect, true);
+}
+
+function stopGameLoop() {
+    clearInterval(intervalVar);
+}
+
+function setFormData(secondsLeft, solved) {
+    document.getElementById("solve_time_seconds").value = secondsLeft;
+    document.getElementById("solved").value = solved;
+    document.getElementById("next-button").classList.remove("d-none");
+}
+
+function displayGameSolved() {
+    clearRectangle(0, 0, CANVAS.width, CANVAS.height);
+    CONTEXT.font = "40px Arial";
+    CONTEXT.fillStyle = "blue";
+    CONTEXT.textAlign = "center";
+    CONTEXT.textBaseline = "middle";
+    CONTEXT.fillText("Congratulations!", CANVAS.width / 2, CANVAS.height / 2);
+}
+
+function displayTimeOut() {
+    clearRectangle(0, 0, CANVAS.width, CANVAS.height);
+    CONTEXT.font = "40px Arial";
+    CONTEXT.fillStyle = "red";
+    CONTEXT.textAlign = "center";
+    CONTEXT.textBaseline = "middle"; CONTEXT.fillText("Time's up!", CANVAS.width / 2, CANVAS.height / 2);
+}
+
 function moveRect(e) {
     const UP = 38;
     const LEFT = 37;
@@ -102,21 +133,15 @@ function moveRect(e) {
         drawCursor(point.px, point.py, BLUE);
         x = point.px;
         y = point.py;
+        Cookies.set('x', x);
+        Cookies.set('y', y);
     }
     else if (movingAllowed === SOLVED) { // 2 means 'the rectangle reached the end point'
-        clearInterval(intervalVar);
-        clearRectangle(0, 0, CANVAS.width, CANVAS.height);
-        CONTEXT.font = "40px Arial";
-        CONTEXT.fillStyle = "blue";
-        CONTEXT.textAlign = "center";
-        CONTEXT.textBaseline = "middle";
-        CONTEXT.fillText("Congratulations!", CANVAS.width / 2, CANVAS.height / 2);
-
-        document.getElementById("solve_time_seconds").value = secondsToSolve - timeLeft;
-        document.getElementById("solved").value = "True";
-        document.getElementById("next-button").classList.remove("d-none");
-
-        window.removeEventListener("keydown", moveRect, true);
+        Cookies.set('solved', 1);
+        stopGameLoop();
+        setFormData(secondsToSolve - timeLeft, 1);
+        displayGameSolved();
+        disableCursor();
     }
 }
 
@@ -152,19 +177,21 @@ function canMoveTo(px, py) {
 function createTimer(seconds) {
     intervalVar = setInterval(function () {
         clearRectangle(mazeWidth, 0, CANVAS.width - mazeWidth, CANVAS.height);
-        if (seconds === 0) {
-            clearInterval(intervalVar);
-            window.removeEventListener("keydown", moveRect, true);
-            clearRectangle(0, 0, CANVAS.width, CANVAS.height);
-            CONTEXT.font = "40px Arial";
-            CONTEXT.fillStyle = "red";
-            CONTEXT.textAlign = "center";
-            CONTEXT.textBaseline = "middle"; CONTEXT.fillText("Time's up!", CANVAS.width / 2, CANVAS.height / 2);
-            document.getElementById("next-button").classList.remove("d-none");
-            document.getElementById("solve_time_seconds").value = 0;
-            document.getElementById("solved").value = "False";
+        if (solved === 1) {
+            stopGameLoop();
+            setFormData(secondsToSolve - timeLeft, 1);
+            displayGameSolved();
+            disableCursor();
             return;
         }
+        else if (seconds <= 0) {
+            stopGameLoop();
+            setFormData(secondsToSolve, 0);
+            displayTimeOut();
+            disableCursor();
+            return;
+        }
+
         CONTEXT.font = "30px Arial";
         if (seconds <= 10 && seconds > 5) {
             CONTEXT.fillStyle = "orangered";
@@ -175,6 +202,7 @@ function createTimer(seconds) {
         else {
             CONTEXT.fillStyle = "green";
         }
+
         CONTEXT.textAlign = "center";
         CONTEXT.textBaseline = "middle";
         var minutes = Math.floor(seconds / 60);
@@ -185,10 +213,19 @@ function createTimer(seconds) {
         CONTEXT.fillText(minutes.toString() + ":" + secondsToShow, mazeWidth + 30, CANVAS.height / 2);
         seconds--;
         timeLeft = seconds;
+        Cookies.set(maze_id, seconds);
     }, 1000);
 }
-
-drawMazeAndRectangle();
-window.addEventListener("keydown", moveRect, true);
-timeLeft = secondsToSolve;
-createTimer(timeLeft); // 2 minutes
+if (solved === 1) {
+    setFormData(secondsToSolve - timeLeft, 0);
+    displayGameSolved();
+}
+else if (timeLeft <= 0) {
+    setFormData(secondsToSolve, 0);
+    displayTimeOut();
+}
+else {
+    drawMazeAndRectangle();
+    window.addEventListener("keydown", moveRect, true);
+    createTimer(timeLeft); // 2 minutes
+}
