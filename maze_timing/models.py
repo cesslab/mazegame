@@ -10,6 +10,7 @@ class Constants(BaseConstants):
     players_per_group = None
     maze_game = MazeGame()
     num_rounds = maze_game.rounds
+    INSTRUCTIONS_ROUND = 1
 
 
 class Subsession(BaseSubsession):
@@ -21,6 +22,6 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    solved = models.BooleanField(default=False)
+    solved = models.IntegerField(default=0)
     solve_time_seconds = models.IntegerField()
     maze_id = models.CharField(max_length=255)
