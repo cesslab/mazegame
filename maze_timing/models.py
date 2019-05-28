@@ -8,7 +8,7 @@ from experiment.maze_game import MazeCollection, Participant
 class Constants(BaseConstants):
     name_in_url = 'maze_timing'
     players_per_group = None
-    num_rounds = 35
+    num_rounds = 10
     INSTRUCTIONS_ROUND = 1
 
 
