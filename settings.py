@@ -1,7 +1,7 @@
 from os import environ
 
 SESSION_CONFIG_DEFAULTS = {
-    'real_world_currency_per_point': 1.00,
+    'real_world_currency_per_point': 0.50,
     'participation_fee': 0.00,
     'doc': "",
 }
@@ -12,7 +12,7 @@ SESSION_CONFIGS = [
        'display_name': "Maze Timing",
        'num_demo_participants': 1,
        'app_sequence': ['maze_timing'],
-        'seconds_to_solve_maze': 240,
+        'seconds_to_solve_maze': 120,
     },
 ]
 
@@ -21,7 +21,12 @@ LANGUAGE_CODE = 'en'
 REAL_WORLD_CURRENCY_CODE = 'USD'
 USE_POINTS = True
 
-ROOMS = []
+ROOMS = [
+    {
+        'name': 'cess',
+        'display_name': 'CESS Lab',
+    },
+]
 
 AUTH_LEVEL = environ.get('OTREE_AUTH_LEVEL')
 

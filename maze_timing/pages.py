@@ -1,5 +1,6 @@
 from ._builtin import Page
 from .models import Constants
+from otree.api import Currency as c
 
 from experiment.maze_game import Participant
 
@@ -39,5 +40,19 @@ class MazePage(Page):
             'round': self.round_number,
         }
 
+    def before_next_page(self):
+        if self.player.solved:
+            self.player.payoff = Constants.GAME_WINNINGS
 
-page_sequence = [InstructionPage, MazePage]
+
+class PayoffPage(Page):
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
+
+    def vars_for_template(self):
+        return {
+            'payoff': self.participant.payoff_plus_participation_fee()
+        }
+
+
+page_sequence = [InstructionPage, MazePage, PayoffPage]

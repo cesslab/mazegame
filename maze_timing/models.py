@@ -1,5 +1,5 @@
 from otree.api import (
-    models, widgets, BaseConstants, BaseSubsession, BaseGroup, BasePlayer,
+    models, widgets, BaseConstants, BaseSubsession, BaseGroup, BasePlayer, Currency as c
 )
 
 from experiment.maze_game import MazeCollection, Participant
@@ -10,6 +10,7 @@ class Constants(BaseConstants):
     players_per_group = None
     num_rounds = 10
     INSTRUCTIONS_ROUND = 1
+    GAME_WINNINGS = c(1)
 
 
 class Subsession(BaseSubsession):
